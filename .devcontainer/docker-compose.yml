@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VARIANT: ubuntu-22.04
+    command: sleep infinity
+    environment:
+      - XDG_RUNTIME_DIR=/tmp # wayland
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY} # wayland
+      - DISPLAY=${DISPLAY} # x11
+      - GTK_THEME=Adwaita:dark # theme. Change $export GTK_THEME=Adwaita:light
+    volumes:
+      - ..:/workspace:cached
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/tmp/${WAYLAND_DISPLAY} # wayland
+      - /tmp/.X11-unix:/tmp/.X11-unix # x11
+      - /dev/bus/usb:/dev/bus/usb # usb
+      - android:/home/vscode/Android:rw # android
+      - android_config:/home/vscode/.android:rw # android config
+      - java:/home/vscode/.java:rw # java config
+    cap_add:
+      - SYS_ADMIN # display
+    privileged: true # usb
+    network_mode: host
+
+volumes:
+  android:
+  android_config:
+  java:

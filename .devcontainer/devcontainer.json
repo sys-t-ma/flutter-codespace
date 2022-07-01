@@ -1,0 +1,28 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.238.0/containers/ubuntu
+{
+	"name": "Ubuntu",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"postCreateCommand": "zsh ./.devcontainer/postCreateCommand.sh",
+	"settings": {
+		"editor.formatOnSave": true,
+		"terminal.integrated.defaultProfile.linux": "zsh"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dart-code.flutter"
+			],
+			"dart.analysisExcludedFolders": [
+				"flutter"
+			]
+		}
+	},
+	"remoteUser": "vscode",
+	"features": {
+		"docker-from-docker": "latest",
+		"git": "latest"
+	}
+}

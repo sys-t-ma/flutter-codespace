@@ -3,6 +3,10 @@
 sudo chown -R 1000:1000 $HOME/Android
 sudo chown -R 1000:1000 $HOME/.android
 sudo chown -R 1000:1000 $HOME/.java
+sudo chown -R 1000:1000 $HOME/android-studio
+sudo chown -R 1000:1000 $HOME/.local
+sudo chown -R 1000:1000 $HOME/flutter
+sudo chown -R 1000:1000 $HOME/.config
 
 # zsh
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -13,24 +17,25 @@ sed -i 's/plugins=(git)/plugins=(git docker docker-compose zsh-autosuggestions z
 sudo usermod -s /usr/bin/zsh $(whoami)
 
 # android studio
-export PATH="$PATH:`pwd`/android-studio/bin"
-echo 'export PATH="$PATH:`pwd`/android-studio/bin"' >> ~/.zshrc
-echo 'export PATH="$PATH:`pwd`/android-studio/bin"' >> ~/.bashrc
+export PATH="$PATH:$HOME/android-studio/bin"
+echo 'export PATH="$PATH:$HOME/android-studio/bin"' >> $HOME/.zshrc
+echo 'export PATH="$PATH:$HOME/android-studio/bin"' >> $HOME/.bashrc
 
 # flutter
-git clone https://github.com/flutter/flutter.git -b stable ./flutter &>/dev/null
+git clone https://github.com/flutter/flutter.git -b stable $HOME/flutter &>/dev/null
 
-export PATH="$PATH:`pwd`/flutter/bin"
-echo 'export PATH="$PATH:`pwd`/flutter/bin"' >> ~/.zshrc
-echo 'export PATH="$PATH:`pwd`/flutter/bin"' >> ~/.bashrc
+export PATH="$PATH:$HOME/flutter/bin"
+echo 'export PATH="$PATH:$HOME/flutter/bin"' >> $HOME/.zshrc
+echo 'export PATH="$PATH:$HOME/flutter/bin"' >> $HOME/.bashrc
 
 if [ -d "$HOME/Android/Sdk" ]; then
   flutter config --android-sdk $HOME/Android/Sdk
 fi
 
-if [ -d "/workspace/android-studio" ]; then
-  flutter config --android-studio-dir /workspace/android-studio
+if [ -d "$HOME/android-studio/bin" ]; then
+  flutter config --android-studio-dir $HOME/android-studio
 fi
 
 flutter precache
 flutter doctor
+flutter pub get
